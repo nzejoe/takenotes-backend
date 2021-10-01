@@ -14,8 +14,8 @@ class NoteSerializer(serializers.ModelSerializer):
     
     def update(self, instance, validated_data):
         instance.title = validated_data.get('title', instance.title)
-        instance.text = validated_data.get('text')
-        instance.label = validated_data.get('label')
+        instance.text = validated_data.get('text', instance.text)
+        instance.label = validated_data.get('label', instance.label)
         instance.save()
         return instance
 
@@ -25,3 +25,4 @@ class LabelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Label
         fields = "__all__"
+
