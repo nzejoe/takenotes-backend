@@ -9,11 +9,17 @@ class Label(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return self.name
+
 
 class Note(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=150)
     text = models.TextField()
-    label = models.ForeignKey(Label, on_delete=models.SET_NULL, null=True, blank=True)
+    label = models.ForeignKey(Label, on_delete=models.SET_NULL, null=True, blank=True, related_name='notes')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.title
