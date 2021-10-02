@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 
     # 3rd party apps
     'rest_framework',
+    'corsheaders',
 
     # local apps
     'accounts',
@@ -58,6 +59,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -142,3 +144,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # acounts config.
 AUTH_USER_MODEL = 'accounts.Account'
+
+# add react localhost to corsheader whitelist to allow interaction with server
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:3001'
+]
