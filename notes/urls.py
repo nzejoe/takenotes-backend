@@ -9,8 +9,8 @@ from .views import (
 
 
 urlpatterns = [
-    path('', Notes.as_view(), name='notes'),
-    path('<uuid:pk>/', NoteDetail.as_view(), name="note_detail"),
+    path('notes/', Notes.as_view(), name='notes'),
+    path('notes/<uuid:pk>/', NoteDetail.as_view(), name="note_detail"),
     path('labels/', Labels.as_view(), name='labels'),
     path('labels/<int:pk>/', LabelDetail.as_view(), name='label_detail'),
 ]

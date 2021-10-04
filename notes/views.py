@@ -12,7 +12,7 @@ from .serializers import NoteSerializer, LabelSerializer
 class Notes(APIView):
     
     def get(self, request):
-        notes_list = Note.objects.all()
+        notes_list = Note.objects.all().order_by(('-created'))
         serializer = NoteSerializer(notes_list, many=True)
         return Response(serializer.data)
 
