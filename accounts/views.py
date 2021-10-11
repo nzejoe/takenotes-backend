@@ -1,10 +1,10 @@
 from django.shortcuts import render
 
-from rest_framework import permissions
+from rest_framework import permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.authtoken.models import Token 
-from rest_framework.authtoken.views import ObtainAuthToken 
+from rest_framework.authtoken.models import Token
+from rest_framework.authtoken.views import ObtainAuthToken
 
 from .models import Account
 from .serializers import AccountsSerializer, UserRegistrationSerializer
@@ -14,25 +14,27 @@ from . import signals
 
 
 class AccountListAPI(APIView):
-    
+
     def get(self, request):
         accounts = Account.objects.all()
         serializer = AccountsSerializer(accounts, many=True)
         return Response(serializer.data)
-    
+
     def post(self, request):
         accounts = Account.objects.all()
         serializer = AccountsSerializer(accounts, many=True)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data)
+            return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors)
 
+
 class UserAuth(ObtainAuthToken):
-    
+
     def post(self, request, *args, **kwargs):
-        serializer = self.serializer_class(data=request.data, context={'request': request})
+        serializer = self.serializer_class(
+            data=request.data, context={'request': request})
 
         data = {}
 
@@ -54,9 +56,18 @@ class UserAuth(ObtainAuthToken):
 
         return Response(data)
 
+
+class UserLogout(APIView):
+
+    def post(self, request):
+        token = Token.objects.get(user=request.user)
+        token.delete()
+        return Response({'logged out': "logout was successful!"}, status=status.HTTP_200_OK)
+
+
 class UserRegister(APIView):
     permission_classes = [permissions.AllowAny]
-    
+
     def post(self, request):
         serializer = UserRegistrationSerializer(data=request.data)
 
@@ -73,8 +84,8 @@ class UserRegister(APIView):
             data['email'] = account.email
             data['first_name'] = account.first_name
             data['last_name'] = account.last_name
-            
+
         else:
-            data = serializer.errors # populate data with serializers errors
+            data = serializer.errors  # populate data with serializers errors
 
         return Response(data)
