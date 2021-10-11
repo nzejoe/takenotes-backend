@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 
     # 3rd party apps
     'rest_framework',
+    'rest_framework.authtoken',
     'corsheaders',
 
     # local apps
@@ -154,5 +155,8 @@ CORS_ORIGIN_WHITELIST = [
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES':[
         'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES':[
+        'rest_framework.authentication.TokenAuthentication'
     ]
 }
