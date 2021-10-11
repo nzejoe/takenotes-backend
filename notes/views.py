@@ -1,9 +1,10 @@
-from copy import error
 from django.shortcuts import render
 
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, permissions
 from rest_framework.views import APIView
+
+from .permissions import IsAuthorOrReadOnly
 
 from .models import Label, Note
 from .serializers import NoteSerializer, LabelSerializer
@@ -12,7 +13,7 @@ from .serializers import NoteSerializer, LabelSerializer
 class Notes(APIView):
     
     def get(self, request):
-        notes_list = Note.objects.all().order_by(('-created'))
+        notes_list = Note.objects.filter(author__id=request.user.id).order_by(('-created'))
         serializer = NoteSerializer(notes_list, many=True)
         return Response(serializer.data)
 
@@ -27,10 +28,11 @@ class Notes(APIView):
 
 
 class NoteDetail(APIView):
+    permission_classes = [IsAuthorOrReadOnly]
 
     def get(self,request, pk):
         try:
-            note = Note.objects.get(id=pk)
+            note = Note.objects.get(id=pk, author__id=request.user.id) # make sure only owner can view note
         except Note.DoesNotExist:
             return Response({'error': 'Note not found'}, status=status.HTTP_404_NOT_FOUND)
         serializer = NoteSerializer(note)
@@ -61,7 +63,7 @@ class NoteDetail(APIView):
 class Labels(APIView):
 
     def get(self, request):
-        label_list = Label.objects.all()
+        label_list = Label.objects.filter(author__id=request.user.id)
         serializer = LabelSerializer(label_list, many=True)
         return Response(serializer.data)
 
@@ -77,7 +79,7 @@ class LabelDetail(APIView):
 
     def get(self, request, pk=None):
         try:
-            label = Label.objects.get(id=pk)
+            label = Label.objects.get(id=pk, author__id=request.user.id)
         except Label.DoesNotExist:
             return Response({'error': 'Label not found'}, status=status.HTTP_404_NOT_FOUND)
         serializer = LabelSerializer(label)

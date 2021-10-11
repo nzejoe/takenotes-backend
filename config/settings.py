@@ -145,7 +145,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # acounts config.
 AUTH_USER_MODEL = 'accounts.Account'
 
-# add react localhost to corsheader whitelist to allow interaction with server
+# add frontend localhost to corsheader whitelist to allow interaction with server
 CORS_ORIGIN_WHITELIST = [
-    'http://localhost:3001'
+    'http://localhost:3000'
 ]
+
+# rest framework
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES':[
+        'rest_framework.permissions.IsAuthenticated',
+    ]
+}
