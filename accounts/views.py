@@ -58,7 +58,7 @@ class UserAuth(ObtainAuthToken):
                     {'error':'true', 'message': 'User or password is invalid!'}
                 )
             data = serializer.errors
-            return Response(data)
+        return Response(data)
 
 
 class UserLogout(APIView):
