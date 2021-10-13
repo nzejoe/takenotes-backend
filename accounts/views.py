@@ -1,6 +1,5 @@
-from django.shortcuts import render
 
-from rest_framework import permissions, status
+from rest_framework import permissions, status, serializers
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
@@ -37,6 +36,7 @@ class UserAuth(ObtainAuthToken):
             data=request.data, context={'request': request})
 
         data = {}
+        user = None
 
         if serializer.is_valid():
             user = serializer._validated_data.get('user')
@@ -52,9 +52,13 @@ class UserAuth(ObtainAuthToken):
                 'last_name': user.last_name,
             }
         else:
+            # if not authenticated
+            if user is None:
+                raise serializers.ValidationError(
+                    {'error':'true', 'message': 'User or password is invalid!'}
+                )
             data = serializer.errors
-
-        return Response(data)
+            return Response(data)
 
 
 class UserLogout(APIView):
