@@ -7,7 +7,7 @@ from .models import Note, Label
 class NoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Note
-        fields = "__all__"
+        exclude = ['author']
 
     def create(self, validated_data):
         return Note.objects.create(**validated_data)

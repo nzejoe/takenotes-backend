@@ -20,8 +20,8 @@ class Notes(APIView):
     
     def post(self, request):
         serializer = NoteSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(author=request.user)
             return Response({'created': True, 'note': serializer.data}, status=status.HTTP_201_CREATED)
         else:
             return Response({'created': False, 'error': serializer.errors}, status=status.HTTP_406_NOT_ACCEPTABLE)
