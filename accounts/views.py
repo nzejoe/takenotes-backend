@@ -1,5 +1,5 @@
 
-from rest_framework import permissions, status, serializers
+from rest_framework import permissions, status, serializers, generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
@@ -64,20 +64,22 @@ class UserAuth(ObtainAuthToken):
 class UserLogout(APIView):
 
     def post(self, request):
+        
         token = Token.objects.get(user=request.user)
         token.delete()
         return Response({'logged out': "logout was successful!"}, status=status.HTTP_200_OK)
 
 
-class UserRegister(APIView):
-    permission_classes = [permissions.AllowAny]
+class UserRegister(generics.CreateAPIView):
+    serializer_class = UserRegistrationSerializer
+    permission_classes = [permissions.AllowAny,]
 
     def post(self, request):
-        serializer = UserRegistrationSerializer(data=request.data)
+        serializer =self.serializer_class(data=request.data, context={'request': request})
 
         data = {}
 
-        if serializer.is_valid():
+        if serializer.is_valid(raise_exception=True):
             account = serializer.save()
 
             # get user token key
@@ -88,8 +90,7 @@ class UserRegister(APIView):
             data['email'] = account.email
             data['first_name'] = account.first_name
             data['last_name'] = account.last_name
-
         else:
-            data = serializer.errors  # populate data with serializers errors
-
-        return Response(data)
+            data = serializer.errors
+        return Response(data)  # populate data with serializers errors
+            
