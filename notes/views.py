@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.utils.text import slugify
 
 from rest_framework.response import Response
 from rest_framework import status, permissions
@@ -69,13 +70,14 @@ class Labels(APIView):
 
     def post(self, request):
         serializer = LabelSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(author=request.user)
             return Response({'created': True, 'label': serializer.data}, status=status.HTTP_201_CREATED)
         else:
             return Response({'created': False, 'error': serializer.errors}, status=status.HTTP_406_NOT_ACCEPTABLE)
 
 class LabelDetail(APIView):
+    permission_classes = [IsAuthorOrReadOnly,]
 
     def get(self, request, pk=None):
         try:
@@ -88,7 +90,7 @@ class LabelDetail(APIView):
 
     def put(self, request, pk=None):
         try:
-            label = Label.objects.get(id=pk)
+            label = Label.objects.get(id=pk, author__id=request.user.id)
         except Label.DoesNotExist:
             return Response({'error': 'Label not found'}, status=status.HTTP_404_NOT_FOUND)
         serializer = LabelSerializer(label, data=request.data)
@@ -101,7 +103,7 @@ class LabelDetail(APIView):
 
     def delete(self, request, pk=None):
         try:
-            label = Label.objects.get(id=pk)
+            label = Label.objects.get(id=pk, author__id=request.user.id)
         except Label.DoesNotExist:
             return Response({'error': 'Label not found'}, status=status.HTTP_404_NOT_FOUND)
         label.delete()

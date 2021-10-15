@@ -1,10 +1,11 @@
-from django.db.models import fields
 from rest_framework import serializers
 
 from .models import Account
+from notes.serializers import NoteSerializer
 
 
 class AccountsSerializer(serializers.ModelSerializer):
+    notes = NoteSerializer(many=True, read_only=True)
     class Meta:
         model = Account
         exclude = ['password']
