@@ -37,5 +37,4 @@ class LabelSerializer(serializers.ModelSerializer):
         if name_exists:
             raise serializers.ValidationError({'name': 'Name already exists!'})
         return Label.objects.create(**validated_data)
-
-
+    
