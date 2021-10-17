@@ -148,7 +148,8 @@ AUTH_USER_MODEL = 'accounts.Account'
 
 # add frontend localhost to corsheader whitelist to allow interaction with server
 CORS_ORIGIN_WHITELIST = [
-    'http://localhost:3001'
+    'http://localhost:3001',
+    'http://localhost:3000',
 ]
 
 # rest framework

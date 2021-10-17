@@ -64,7 +64,7 @@ class NoteDetail(APIView):
 class Labels(APIView):
 
     def get(self, request):
-        label_list = Label.objects.filter(author__id=request.user.id)
+        label_list = Label.objects.filter(author__id=request.user.id).order_by('name')
         serializer = LabelSerializer(label_list, many=True)
         return Response(serializer.data)
 
