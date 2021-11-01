@@ -1,3 +1,10 @@
+from django.core import mail
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes
+from django.template.loader import render_to_string
+from django.contrib.auth.tokens import default_token_generator
+from django.core.mail import EmailMessage
+
 
 from django.http import request
 from rest_framework import permissions, status, serializers, generics
@@ -100,10 +107,26 @@ class PasswordReset(APIView):
     permission_classes = [permissions.AllowAny, ]
 
     def post(self, request):
+        
         serializer = PasswordResetForm(data=request.data, context={'request': request})
         
         if serializer.is_valid(raise_exception=True):
             email = serializer.validated_data.get('email')
+            user = Account.objects.get(email=email)
+            current_site = request.META.get('HTTP_ORIGIN')
+            token = default_token_generator.make_token(user)
+            uid = urlsafe_base64_encode(force_bytes(user.pk))
+            confirm_url = f'{current_site}/account/password_reset_confirm/{uid}/{token}'
+            context = {
+                'username': user.username,
+                'domain': confirm_url
+            }
+            # email message
+            mail_subject = "Password reset"
+            message = render_to_string('account/password_reset_email.html', context)
+            email_message = EmailMessage(mail_subject, message, to=[email, ])
+            email_message.send()
+            
             return Response({'email': email})
         else:
             return Response(serializer.errors)
