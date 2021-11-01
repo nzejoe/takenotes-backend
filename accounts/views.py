@@ -1,4 +1,5 @@
 
+from django.http import request
 from rest_framework import permissions, status, serializers, generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -6,7 +7,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
 
 from .models import Account
-from .serializers import AccountsSerializer, UserRegistrationSerializer
+from .serializers import AccountsSerializer, PasswordResetForm, UserRegistrationSerializer
 
 # call the signal
 from . import signals
@@ -94,3 +95,15 @@ class UserRegister(generics.CreateAPIView):
             data = serializer.errors
         return Response(data)  # populate data with serializers errors
             
+
+class PasswordReset(APIView):
+    permission_classes = [permissions.AllowAny, ]
+
+    def post(self, request):
+        serializer = PasswordResetForm(data=request.data, context={'request': request})
+        
+        if serializer.is_valid(raise_exception=True):
+            email = serializer.validated_data.get('email')
+            return Response({'email': email})
+        else:
+            return Response(serializer.errors)

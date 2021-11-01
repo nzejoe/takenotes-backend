@@ -6,6 +6,7 @@ from notes.serializers import NoteSerializer
 
 class AccountsSerializer(serializers.ModelSerializer):
     notes = NoteSerializer(many=True, read_only=True)
+
     class Meta:
         model = Account
         exclude = ['password']
@@ -65,5 +66,14 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 f'Account with that email already exists!')
 
-       
         return data
+
+
+class PasswordResetForm(serializers.Serializer):
+    email = serializers.EmailField()
+
+    def validate_email(self, email):
+        if not Account.objects.filter(email=email).exists():
+            raise serializers.ValidationError(
+                f'{email} is not linked with any account!')
+        return super().validate(email)

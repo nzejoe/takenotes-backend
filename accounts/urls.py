@@ -2,7 +2,7 @@ from django.urls import path
 
 # from rest_framework.authtoken.views import obtain_auth_token
 
-from .views import AccountListAPI,UserAuth, UserLogout, UserRegister
+from .views import AccountListAPI, PasswordReset,UserAuth, UserLogout, UserRegister
 
 
 urlpatterns = [
@@ -10,4 +10,5 @@ urlpatterns = [
    path('login/', UserAuth.as_view(), name="login"),
    path('logout/', UserLogout.as_view(), name="logout"),
    path('register/', UserRegister.as_view(), name="register"),
+   path('password_reset/', PasswordReset.as_view(), name="password_reset"),
 ]
