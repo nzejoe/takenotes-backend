@@ -1,12 +1,11 @@
-from django.core import mail
+import json
+
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.template.loader import render_to_string
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import EmailMessage
 
-
-from django.http import request
 from rest_framework import permissions, status, serializers, generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -130,3 +129,61 @@ class PasswordReset(APIView):
             return Response({'email': email})
         else:
             return Response(serializer.errors)
+
+
+class PasswordResetConfirm(APIView):
+    permission_classes = [permissions.AllowAny, ]
+
+    def post(self, reqeust, uidb64, token):
+        
+        try:
+            uid = urlsafe_base64_decode(uidb64).decode()
+            user = Account.objects.get(pk=uid)
+        except Account.DoesNotExist:
+            user = None
+
+        if user is not None and default_token_generator.check_token(user, token):
+            data = json.dumps({'success': True, 'user_id': uid})
+        else:
+            data = json.dumps({'success': False})
+
+        return Response(data)
+
+
+class PasswordResetComplete(APIView):
+    permission_classes = [permissions.AllowAny, ]
+    
+    def get(self, request, pk):
+        try:
+            user = Account.objects.get(pk=pk)
+        except (Account.DoesNotExist, ValueError, TypeError):
+            user = None
+
+        if user is not None:
+            data = json.dumps({'validAccount': True})
+            statusRes = status.HTTP_200_OK
+        else:
+            data = json.dumps({'validAccount': False})
+            statusRes = status.HTTP_404_NOT_FOUND
+
+        return Response(data, status=statusRes)
+
+    def put(slef, request, pk):
+
+        try:
+            user = Account.objects.get(pk=pk)
+        except (Account.DoesNotExist, ValueError, TypeError):
+            user = None
+
+        if user is not None:
+            password = request.data['password']
+            user.set_password(password)
+            user.save()
+            
+            data = json.dumps({'success': True})
+            statusRes = status.HTTP_200_OK
+        else:
+            data = json.dumps({'success': False})
+            statusRes = status.HTTP_400_BAD_REQUEST
+
+        return Response(data, status=statusRes)
