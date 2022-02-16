@@ -152,6 +152,7 @@ AUTH_USER_MODEL = 'accounts.Account'
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:3001',
     'http://localhost:3000',
+    'https://takenotes-front.netlify.app/',
 ]
 
 # rest framework
