@@ -13,7 +13,8 @@ from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
 
 from .models import Account
-from .serializers import AccountsSerializer, PasswordResetForm, UserRegistrationSerializer
+from .serializers import (AccountsSerializer, PasswordResetForm,
+                          UserRegistrationSerializer)
 
 # call the signal
 from . import signals
@@ -37,6 +38,7 @@ class AccountListAPI(APIView):
 
 
 class UserAuth(ObtainAuthToken):
+    permission_classes = [permissions.AllowAny, ]
 
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(
@@ -45,8 +47,8 @@ class UserAuth(ObtainAuthToken):
         data = {}
         user = None
 
-        if serializer.is_valid():
-            user = serializer._validated_data.get('user')
+        if serializer.is_valid():            
+            user = serializer.validated_data['user']
 
             # get token or create one if none exists
             token, created = Token.objects.get_or_create(user=user)
@@ -59,10 +61,9 @@ class UserAuth(ObtainAuthToken):
                 'last_name': user.last_name,
             }
         else:
-            # if not authenticated
             if user is None:
                 raise serializers.ValidationError(
-                    {'error':'true', 'message': 'User or password is invalid!'}
+                    {'error': 'true', 'message': 'User or password is invalid!'}
                 )
             data = serializer.errors
         return Response(data)
@@ -71,7 +72,7 @@ class UserAuth(ObtainAuthToken):
 class UserLogout(APIView):
 
     def post(self, request):
-        
+
         token = Token.objects.get(user=request.user)
         token.delete()
         return Response({'logged out': "logout was successful!"}, status=status.HTTP_200_OK)
@@ -79,10 +80,11 @@ class UserLogout(APIView):
 
 class UserRegister(generics.CreateAPIView):
     serializer_class = UserRegistrationSerializer
-    permission_classes = [permissions.AllowAny,]
+    permission_classes = [permissions.AllowAny, ]
 
     def post(self, request):
-        serializer =self.serializer_class(data=request.data, context={'request': request})
+        serializer = self.serializer_class(
+            data=request.data, context={'request': request})
 
         data = {}
 
@@ -100,15 +102,16 @@ class UserRegister(generics.CreateAPIView):
         else:
             data = serializer.errors
         return Response(data)  # populate data with serializers errors
-            
+
 
 class PasswordReset(APIView):
     permission_classes = [permissions.AllowAny, ]
 
     def post(self, request):
-        
-        serializer = PasswordResetForm(data=request.data, context={'request': request})
-        
+
+        serializer = PasswordResetForm(
+            data=request.data, context={'request': request})
+
         if serializer.is_valid(raise_exception=True):
             email = serializer.validated_data.get('email')
             user = Account.objects.get(email=email)
@@ -122,10 +125,11 @@ class PasswordReset(APIView):
             }
             # email message
             mail_subject = "Password reset"
-            message = render_to_string('account/password_reset_email.html', context)
+            message = render_to_string(
+                'account/password_reset_email.html', context)
             email_message = EmailMessage(mail_subject, message, to=[email, ])
             email_message.send()
-            
+
             return Response({'email': email})
         else:
             return Response(serializer.errors)
@@ -135,7 +139,7 @@ class PasswordResetConfirm(APIView):
     permission_classes = [permissions.AllowAny, ]
 
     def post(self, reqeust, uidb64, token):
-        
+
         try:
             uid = urlsafe_base64_decode(uidb64).decode()
             user = Account.objects.get(pk=uid)
@@ -152,7 +156,7 @@ class PasswordResetConfirm(APIView):
 
 class PasswordResetComplete(APIView):
     permission_classes = [permissions.AllowAny, ]
-    
+
     def get(self, request, pk):
         try:
             user = Account.objects.get(pk=pk)
@@ -179,7 +183,7 @@ class PasswordResetComplete(APIView):
             password = request.data['password']
             user.set_password(password)
             user.save()
-            
+
             data = json.dumps({'success': True})
             statusRes = status.HTTP_200_OK
         else:
@@ -200,7 +204,9 @@ class PasswordChange(APIView):
         if user.check_password(current_password):
             user.set_password(new_password)
             user.save()
-            data = json.dumps({'error': False, 'message': 'Password accepted!'})
+            data = json.dumps(
+                {'error': False, 'message': 'Password accepted!'})
         else:
-            data = json.dumps({'error': True, 'message': 'Current password is incorrect!'})
+            data = json.dumps(
+                {'error': True, 'message': 'Current password is incorrect!'})
         return Response(data)

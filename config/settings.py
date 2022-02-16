@@ -25,12 +25,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-j7yfq^-r2+tn#l8dcic9jzy$rbil38e$&wd6r#-l5z6)gp_(e&'
+SECRET_KEY = env.str('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['codegenesis-takenotes.herokuapp.com',
+                 '127.0.0.1', 'http://localhost:3000', ]
 
 
 # Application definition
@@ -152,8 +153,10 @@ AUTH_USER_MODEL = 'accounts.Account'
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:3001',
     'http://localhost:3000',
-    'https://takenotes-front.netlify.app/',
+    'https://takenotes-front.netlify.app',
 ]
+# CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
 
 # rest framework
 REST_FRAMEWORK = {
