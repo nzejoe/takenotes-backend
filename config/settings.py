@@ -90,10 +90,10 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'takeNotes',
-        'USER':'postgres',
+        'NAME': env.str('DATABASE_NAME'),
+        'USER': env.str('DATABASE_USER'),
         'PASSWORD': env.str('DATABASE_PASSWORD'),
-        'HOST': 'localhost',
+        'HOST': env.str('DATABASE_HOST'),
         'PORT': 5432
     }
 }
