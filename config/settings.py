@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
+import django_heroku
 from pathlib import Path
 from environs import Env
 
@@ -165,3 +166,10 @@ REST_FRAMEWORK = {
 # email config
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = env.str('EMAIL_HOST_USER')
+
+# heroku config
+django_heroku.settings(locals())
+
+# DEPLOYMENT
+if env.bool('PRODUCTION'):
+    DEBUG = False
