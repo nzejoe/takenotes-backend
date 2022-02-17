@@ -25,7 +25,7 @@ class Label(models.Model):
 class Note(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notes')
-    title = models.CharField(max_length=150)
+    title = models.CharField(max_length=150, null=True, blank=True)
     text = models.TextField()
     label = models.ForeignKey(Label, on_delete=models.SET_NULL, null=True, blank=True, related_name='notes')
     created = models.DateTimeField(auto_now_add=True)
