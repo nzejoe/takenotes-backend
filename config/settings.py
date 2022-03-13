@@ -168,13 +168,20 @@ REST_FRAMEWORK = {
     ]
 }
 
-# email config
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-DEFAULT_FROM_EMAIL = env.str('EMAIL_HOST_USER')
+# email configurations
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = '587'
+EMAIL_HOST_USER = 'codegenesis.baseone@gmail.com'
+EMAIL_HOST_PASSWORD = env.str('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 # heroku config
 django_heroku.settings(locals())
 
 # DEPLOYMENT
 if env.bool('PRODUCTION'):
+    DEBUG = True
+else:
     DEBUG = False

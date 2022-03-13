@@ -1,0 +1,701 @@
+[
+{
+    "model": "contenttypes.contenttype",
+    "pk": 1,
+    "fields": {
+        "app_label": "admin",
+        "model": "logentry"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 2,
+    "fields": {
+        "app_label": "auth",
+        "model": "permission"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 3,
+    "fields": {
+        "app_label": "auth",
+        "model": "group"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 4,
+    "fields": {
+        "app_label": "contenttypes",
+        "model": "contenttype"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 5,
+    "fields": {
+        "app_label": "sessions",
+        "model": "session"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 6,
+    "fields": {
+        "app_label": "authtoken",
+        "model": "token"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 7,
+    "fields": {
+        "app_label": "authtoken",
+        "model": "tokenproxy"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 8,
+    "fields": {
+        "app_label": "accounts",
+        "model": "account"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 9,
+    "fields": {
+        "app_label": "notes",
+        "model": "label"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 10,
+    "fields": {
+        "app_label": "notes",
+        "model": "note"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "268j30hx21zn8sqnj8gv8kv0skt607jn",
+    "fields": {
+        "session_data": ".eJxVjDsOwyAQBe9CHSNYFrykTJ8zWOwCcT6yJX-qKHePLblIilfNzHurLq1L361zmbp7VmflbaaMkBtHHBt0pjaRwDeuBu-crVBTVaffjJM8y7C3-ZGG26hlHJbpznpX9EFnfR1zeV0O9--gT3O_1dGGwlLEokOmQCFbsdAGQwwxtT5s8xWFENCQGIOGGaiKQPQpefX5Ap83QCg:1nKDka:Dcrponf3urZbCzbpVgehleo0opbTLuAKuunX7nQQkD0",
+        "expire_date": "2022-03-02T06:25:16.149Z"
+    }
+},
+{
+    "model": "accounts.account",
+    "pk": "51d8d42d-38b9-430f-9825-3f65331f2faf",
+    "fields": {
+        "password": "pbkdf2_sha256$320000$lDjgdsYzdTfn2y7bb4y4BN$ScdRrWQgojrpT5vwuP8JpAgq3Kpn/PI1Cy8D/+u0zKA=",
+        "username": "maya",
+        "first_name": "Maya",
+        "last_name": "Jonathan",
+        "middle_name": null,
+        "email": "maya@company.com",
+        "phone_number": null,
+        "date_joined": "2022-02-16T06:24:24.681Z",
+        "last_login": "2022-02-16T06:25:15.704Z",
+        "is_admin": true,
+        "is_superadmin": true,
+        "is_staff": true,
+        "is_active": true
+    }
+},
+{
+    "model": "notes.label",
+    "pk": 1,
+    "fields": {
+        "name": "Movies",
+        "slug": "movies",
+        "author": [
+            "maya@company.com"
+        ],
+        "created": "2022-02-16T06:40:11.131Z",
+        "updated": "2022-02-16T06:40:11.131Z"
+    }
+},
+{
+    "model": "notes.label",
+    "pk": 2,
+    "fields": {
+        "name": "Inspiration",
+        "slug": "inspiration",
+        "author": [
+            "maya@company.com"
+        ],
+        "created": "2022-02-16T06:54:24.821Z",
+        "updated": "2022-02-16T06:54:24.821Z"
+    }
+},
+{
+    "model": "notes.note",
+    "pk": "0b53a474-0caa-44b6-9599-e7f0679bccc7",
+    "fields": {
+        "author": [
+            "maya@company.com"
+        ],
+        "title": "Live and let die",
+        "text": "A movie title updated",
+        "label": 1,
+        "created": "2022-02-16T06:52:08.212Z",
+        "updated": "2022-02-16T07:01:48.105Z"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 1,
+    "fields": {
+        "name": "Can add log entry",
+        "content_type": [
+            "admin",
+            "logentry"
+        ],
+        "codename": "add_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 2,
+    "fields": {
+        "name": "Can change log entry",
+        "content_type": [
+            "admin",
+            "logentry"
+        ],
+        "codename": "change_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 3,
+    "fields": {
+        "name": "Can delete log entry",
+        "content_type": [
+            "admin",
+            "logentry"
+        ],
+        "codename": "delete_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 4,
+    "fields": {
+        "name": "Can view log entry",
+        "content_type": [
+            "admin",
+            "logentry"
+        ],
+        "codename": "view_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 5,
+    "fields": {
+        "name": "Can add permission",
+        "content_type": [
+            "auth",
+            "permission"
+        ],
+        "codename": "add_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 6,
+    "fields": {
+        "name": "Can change permission",
+        "content_type": [
+            "auth",
+            "permission"
+        ],
+        "codename": "change_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 7,
+    "fields": {
+        "name": "Can delete permission",
+        "content_type": [
+            "auth",
+            "permission"
+        ],
+        "codename": "delete_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 8,
+    "fields": {
+        "name": "Can view permission",
+        "content_type": [
+            "auth",
+            "permission"
+        ],
+        "codename": "view_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 9,
+    "fields": {
+        "name": "Can add group",
+        "content_type": [
+            "auth",
+            "group"
+        ],
+        "codename": "add_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 10,
+    "fields": {
+        "name": "Can change group",
+        "content_type": [
+            "auth",
+            "group"
+        ],
+        "codename": "change_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 11,
+    "fields": {
+        "name": "Can delete group",
+        "content_type": [
+            "auth",
+            "group"
+        ],
+        "codename": "delete_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 12,
+    "fields": {
+        "name": "Can view group",
+        "content_type": [
+            "auth",
+            "group"
+        ],
+        "codename": "view_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 13,
+    "fields": {
+        "name": "Can add content type",
+        "content_type": [
+            "contenttypes",
+            "contenttype"
+        ],
+        "codename": "add_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 14,
+    "fields": {
+        "name": "Can change content type",
+        "content_type": [
+            "contenttypes",
+            "contenttype"
+        ],
+        "codename": "change_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 15,
+    "fields": {
+        "name": "Can delete content type",
+        "content_type": [
+            "contenttypes",
+            "contenttype"
+        ],
+        "codename": "delete_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 16,
+    "fields": {
+        "name": "Can view content type",
+        "content_type": [
+            "contenttypes",
+            "contenttype"
+        ],
+        "codename": "view_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 17,
+    "fields": {
+        "name": "Can add session",
+        "content_type": [
+            "sessions",
+            "session"
+        ],
+        "codename": "add_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 18,
+    "fields": {
+        "name": "Can change session",
+        "content_type": [
+            "sessions",
+            "session"
+        ],
+        "codename": "change_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 19,
+    "fields": {
+        "name": "Can delete session",
+        "content_type": [
+            "sessions",
+            "session"
+        ],
+        "codename": "delete_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 20,
+    "fields": {
+        "name": "Can view session",
+        "content_type": [
+            "sessions",
+            "session"
+        ],
+        "codename": "view_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 21,
+    "fields": {
+        "name": "Can add Token",
+        "content_type": [
+            "authtoken",
+            "token"
+        ],
+        "codename": "add_token"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 22,
+    "fields": {
+        "name": "Can change Token",
+        "content_type": [
+            "authtoken",
+            "token"
+        ],
+        "codename": "change_token"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 23,
+    "fields": {
+        "name": "Can delete Token",
+        "content_type": [
+            "authtoken",
+            "token"
+        ],
+        "codename": "delete_token"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 24,
+    "fields": {
+        "name": "Can view Token",
+        "content_type": [
+            "authtoken",
+            "token"
+        ],
+        "codename": "view_token"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 25,
+    "fields": {
+        "name": "Can add token",
+        "content_type": [
+            "authtoken",
+            "tokenproxy"
+        ],
+        "codename": "add_tokenproxy"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 26,
+    "fields": {
+        "name": "Can change token",
+        "content_type": [
+            "authtoken",
+            "tokenproxy"
+        ],
+        "codename": "change_tokenproxy"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 27,
+    "fields": {
+        "name": "Can delete token",
+        "content_type": [
+            "authtoken",
+            "tokenproxy"
+        ],
+        "codename": "delete_tokenproxy"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 28,
+    "fields": {
+        "name": "Can view token",
+        "content_type": [
+            "authtoken",
+            "tokenproxy"
+        ],
+        "codename": "view_tokenproxy"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 29,
+    "fields": {
+        "name": "Can add account",
+        "content_type": [
+            "accounts",
+            "account"
+        ],
+        "codename": "add_account"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 30,
+    "fields": {
+        "name": "Can change account",
+        "content_type": [
+            "accounts",
+            "account"
+        ],
+        "codename": "change_account"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 31,
+    "fields": {
+        "name": "Can delete account",
+        "content_type": [
+            "accounts",
+            "account"
+        ],
+        "codename": "delete_account"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 32,
+    "fields": {
+        "name": "Can view account",
+        "content_type": [
+            "accounts",
+            "account"
+        ],
+        "codename": "view_account"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 33,
+    "fields": {
+        "name": "Can add label",
+        "content_type": [
+            "notes",
+            "label"
+        ],
+        "codename": "add_label"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 34,
+    "fields": {
+        "name": "Can change label",
+        "content_type": [
+            "notes",
+            "label"
+        ],
+        "codename": "change_label"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 35,
+    "fields": {
+        "name": "Can delete label",
+        "content_type": [
+            "notes",
+            "label"
+        ],
+        "codename": "delete_label"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 36,
+    "fields": {
+        "name": "Can view label",
+        "content_type": [
+            "notes",
+            "label"
+        ],
+        "codename": "view_label"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 37,
+    "fields": {
+        "name": "Can add note",
+        "content_type": [
+            "notes",
+            "note"
+        ],
+        "codename": "add_note"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 38,
+    "fields": {
+        "name": "Can change note",
+        "content_type": [
+            "notes",
+            "note"
+        ],
+        "codename": "change_note"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 39,
+    "fields": {
+        "name": "Can delete note",
+        "content_type": [
+            "notes",
+            "note"
+        ],
+        "codename": "delete_note"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 40,
+    "fields": {
+        "name": "Can view note",
+        "content_type": [
+            "notes",
+            "note"
+        ],
+        "codename": "view_note"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 2,
+    "fields": {
+        "action_time": "2022-02-16T14:52:15.297Z",
+        "user": [
+            "maya@company.com"
+        ],
+        "content_type": [
+            "accounts",
+            "account"
+        ],
+        "object_id": "be7d9c26-4c7e-42d9-be71-a5f507649a74",
+        "object_repr": "testuser@company.com",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 3,
+    "fields": {
+        "action_time": "2022-02-16T16:15:30.274Z",
+        "user": [
+            "maya@company.com"
+        ],
+        "content_type": [
+            "accounts",
+            "account"
+        ],
+        "object_id": "0ef30d67-85f6-489a-a692-75070c58d382",
+        "object_repr": "testuser@company.com",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Email\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 4,
+    "fields": {
+        "action_time": "2022-02-16T16:17:38.832Z",
+        "user": [
+            "maya@company.com"
+        ],
+        "content_type": [
+            "accounts",
+            "account"
+        ],
+        "object_id": "0ef30d67-85f6-489a-a692-75070c58d382",
+        "object_repr": "testuser@company.com",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 5,
+    "fields": {
+        "action_time": "2022-02-16T16:43:51.105Z",
+        "user": [
+            "maya@company.com"
+        ],
+        "content_type": [
+            "accounts",
+            "account"
+        ],
+        "object_id": "8ba4e2f1-6b38-45a4-b0d9-bfdb67fac975",
+        "object_repr": "testuser@company.com",
+        "action_flag": 3,
+        "change_message": ""
+    }
+}
+]
