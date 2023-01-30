@@ -182,6 +182,6 @@ django_heroku.settings(locals())
 
 # DEPLOYMENT
 if env.bool('PRODUCTION'):
-    DEBUG = True
-else:
     DEBUG = False
+else:
+    DEBUG = True
